@@ -1,0 +1,10 @@
+table.usertable{
+	border-collapse: collapse;
+	border-color: black;
+	border-style:  solid;
+	border-radius: 8px;
+}
+td.usertable{
+	padding: 1%;
+	border: 1px solid black;
+}
