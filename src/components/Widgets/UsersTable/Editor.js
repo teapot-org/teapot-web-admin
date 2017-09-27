@@ -7,7 +7,7 @@ export default ({ activeUser, onChangeActive, onSubmitActive }) => {
     return (
         <div >
             <form onSubmit={(event) => onSubmitActive(event)}>
-                    <table>
+                    <table className="editor">
                         <thead>
                             <tr>
 								<td>Authority</td>
@@ -65,7 +65,7 @@ export default ({ activeUser, onChangeActive, onSubmitActive }) => {
                             </tr>
                         </tbody>
                   </table>
-                  <button type="submit">Save</button>
+                  <button type="submit" className="button">Save</button>
             </form>
         </div >
     );

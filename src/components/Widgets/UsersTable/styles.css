@@ -1,10 +1,64 @@
-table.usertable{
-	border-collapse: collapse;
-	border-color: black;
-	border-style:  solid;
-	border-radius: 8px;
+table.usertable {
+font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+font-size: 14px;
+border-radius: 10px;
+border-spacing: 0;
+text-align: center;
+margin-left: 10%;
+margin-top: 5%;
 }
-td.usertable{
-	padding: 1%;
-	border: 1px solid black;
+table.signin {
+font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+font-size: 14px;
+border-radius: 10px;
+border-spacing: 0;
+text-align: center;
+margin-left: 35%;
+margin-top: 5%;
+}
+table.editor {
+font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+font-size: 14px;
+border-radius: 10px;
+border-spacing: 0;
+text-align: center;
+margin-left: 2%;
+margin-top: 5%;
+}
+th {
+background: #BCEBDD;
+color: white;
+text-shadow: 0 1px 1px #2D2020;
+padding: 5px 10px;
+}
+th, td {
+border-style: solid;
+border-width: 0 1px 1px 0;
+border-color: white;
+}
+th:first-child, td:first-child {
+text-align: left;
+}
+th:first-child {
+border-top-left-radius: 5px;
+}
+th:last-child {
+border-top-right-radius: 5px;
+border-right: none;
+}
+td {
+padding: 5px 10px;
+background: #F8E391;
+}
+tr:last-child td:first-child {
+border-radius: 0 0 0 5px;
+}
+tr:last-child td:last-child {
+border-radius: 0 0 5px 0;
+}
+tr td:last-child {
+border-right: none;
+}
+.button{
+	margin-left: 50%;
 }
