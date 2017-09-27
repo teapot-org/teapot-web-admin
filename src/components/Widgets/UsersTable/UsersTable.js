@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import SignIn from './SignIn';
 import Editor from './Editor';
+import './styles.css';
 
 function act(user) { if (user.available) { return "Active" } else { return "Disactive" } }
 
@@ -23,12 +24,13 @@ class UsersTable extends React.Component {
             email: '',
             password: '',
             activeUser: {
+				
                 active: false,
+				Authority: null,
                 name: null,
                 lastName: null,
                 firstName: null,
                 email: null,
-                birthday: null,
                 description: null,
                 link: null,
             },
@@ -40,7 +42,7 @@ class UsersTable extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onChangeActive = this.onChangeActive.bind(this);
         this.onSubmitActive = this.onSubmitActive.bind(this);
-        this.loadData();
+        this.loadData = this.loadData.bind(this);
     }
 
     loadData() {
@@ -58,12 +60,28 @@ class UsersTable extends React.Component {
         this.setState({ [name]: value });
     }
 
-    onChangeActive(event) {
+    onChangeActive(event, activeUser1) {
         let target = event.target;
         let value = (target.type === 'checkbox') ? target.checked : target.value;
         let name = target.name;
 
-        this.setState({ activeUser: { [name]: value } });
+        let tmp = this.state.activeUser;
+        Object.assign(tmp, { [name]: value });
+    
+        this.setState({
+            activeUser:
+            {
+				authority: `${tmp.authority}`,
+                active: `${tmp.active}`,
+                name: `${tmp.name}`,
+                lastName: `${tmp.lastName}`,
+                firstName: `${tmp.firstName}`,
+                email: `${tmp.email}`,
+                description: `${tmp.description}`,
+                link: `${tmp.link}`,
+            },
+            });
+    
     }
 
     onSubmitActive(event) {
@@ -79,14 +97,14 @@ class UsersTable extends React.Component {
                     'Authorization': `Bearer ${localStorage.getItem(ACCESS_TOKEN_KEY)}`,
                 },
                 params: {
+					authority: `${activeUser.authority}`,
                     name: `${activeUser.name}`,
-                    firstname: `${activeUser.firstname}`,
-                    lastname: `${activeUser.lastname}`,
+                    firstName: `${activeUser.firstName}`,
+                    lastName: `${activeUser.lastName}`,
                     email: `${activeUser.email}`,
-                    birthday: `${activeUser.birthday}`,
                     description: `${activeUser.description}`,
                 },
-            }).then(this.loadData()).catch(response => console.log(response));
+            }).then(response => console.log(response)).catch(response => console.log(response));
 
             this.setState({ activeUser: { active: false } });
         }
@@ -101,9 +119,6 @@ class UsersTable extends React.Component {
             method: 'post',
             url: 'http://localhost:8080/oauth/token',
 
-            /* headers: {
-               'Authorization': `Basic ${btoa('client:secret')}`,
-             },*/
 
             params: {
                 username: email,
@@ -119,6 +134,7 @@ class UsersTable extends React.Component {
     }
 
     banUser(user) {
+		if(user.authority!="ADMIN"){
         axios({
             method: 'patch',
             url: `${user._links.self.href}`,
@@ -129,59 +145,58 @@ class UsersTable extends React.Component {
             params: {
                 available: `${!user.available}`,
             },
-        }).then(this.loadData()).catch(response => console.log(response));
-
-
+        }).then(this.loadData()).catch(response => console.log(response));}
+		else{
+			alert("This name have authority like 'ADMIN'. Operation failed.");
+		}
     }
 
     Activate(user) {
         this.setState({
             activeUser: {
+				authority: `${user.authority}`,
                 active: true,
                 name: `${user.name}`,
                 lastName: `${user.lastName}`,
                 firstName: `${user.firstName}`,
                 email: `${user.email}`,
-                birthday: `${user.birthday}`,
                 description: `${user.description}`,
                 link: `${user._links.self.href}`,
             },
         });
-        console.log(this.state.activeUser);
     }
 
     render() {
-        const { accept, email, password  } = this.state;
+        const { accept, email, password } = this.state;
+        this.loadData();
         if (accept) {
             return (
                 <div>
                 <div>
-                    <table>
+                    <table className='usertable'>
                         <thead>
                             <tr>
-                                <td>Authority</td>
-                                <td>Username</td>
-                                <td>First Name</td>
-                                <td>Last Name</td>
-                                <td>Email</td>
-                                <td>Birthday</td>
-                                <td>Description</td>
-                                <td>Status</td>
+                                <td className='usertable'>Authority</td>
+                                <td className='usertable'>Username</td>
+                                <td className='usertable'>First Name</td>
+                                <td className='usertable'>Last Name</td>
+                                <td className='usertable'>Email</td>
+                                <td className='usertable'>Description</td>
+                                <td className='usertable'>Status</td>
                             </tr>
                         </thead>
                         <tbody>
                         {
                                 this.state.users.map((user) => {
                                     return <tr key={user.name} onClick={() => this.Activate(user)}>
-                                        <td>{user.authority}</td>
-                                        <td>{user.name}</td>
-                                        <td>{user.firstName}</td>
-                                        <td>{user.lastName}</td>
-                                        <td>{user.email}</td>
-                                        <td>{user.birthday}</td>
-                                        <td>{user.description}</td>
-                                        <td>{act(user)}</td>
-                                        <td>
+                                        <td className='usertable'>{user.authority}</td>
+                                        <td className='usertable'>{user.name}</td>
+                                        <td className='usertable'>{user.firstName}</td>
+                                        <td className='usertable'>{user.lastName}</td>
+                                        <td className='usertable'>{user.email}</td>
+                                        <td className='usertable'>{user.description}</td>
+                                        <td className='usertable'>{act(user)}</td>
+                                        <td className='usertable'>
                                             <button onClick={() =>this.banUser(user)}>Ban</button>
                                         </td>
                                 </tr>;

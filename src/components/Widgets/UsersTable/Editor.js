@@ -2,6 +2,7 @@ import React from 'react';
 
 export default ({ activeUser, onChangeActive, onSubmitActive }) => {
     if (!activeUser.active) { return < h1 > Select user to edit...</h1 >; }
+    
 
     return (
         <div >
@@ -9,16 +10,23 @@ export default ({ activeUser, onChangeActive, onSubmitActive }) => {
                     <table>
                         <thead>
                             <tr>
+								<td>Authority</td>
                                 <td>Username</td>
                                 <td>First Name</td>
                                 <td>Last Name</td>
                                 <td>Email</td>
-                                <td>Birthday</td>
                                 <td>Description</td>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
+								<td>
+                                    <input
+                                        name="authority"
+                                        type="authority"
+                                        value={activeUser.authority}
+                                        onChange={(event) => onChangeActive(event)} />
+                                </td>
                                 <td>
                                     <input
                                         name="name"
@@ -45,13 +53,6 @@ export default ({ activeUser, onChangeActive, onSubmitActive }) => {
                                         name="email"
                                         type="email"
                                         value={activeUser.email}
-                                        onChange={(event) => onChangeActive(event)} />
-                                </td>
-                                <td>
-                                    <input
-                                        name="birthday"
-                                        type="birthday"
-                                        value={activeUser.birthday}
                                         onChange={(event) => onChangeActive(event)} />
                                 </td>
                                 <td>
