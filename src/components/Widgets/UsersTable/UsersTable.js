@@ -130,7 +130,7 @@ class UsersTable extends React.Component {
         }).then(response => {
                     setAccessToken(response.data.access_token);
                     this.setState({ accept: true });
-        });
+        }).catch(()=>alert("Wrong email or password"));
     }
 
     banUser(user) {
