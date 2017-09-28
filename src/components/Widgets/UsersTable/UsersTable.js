@@ -43,6 +43,8 @@ class UsersTable extends React.Component {
         this.onChangeActive = this.onChangeActive.bind(this);
         this.onSubmitActive = this.onSubmitActive.bind(this);
         this.loadData = this.loadData.bind(this);
+		
+		this.loadData();
     }
 
     loadData() {
@@ -86,6 +88,8 @@ class UsersTable extends React.Component {
 
     onSubmitActive(event) {
         event.preventDefault();
+		
+
 
         const { activeUser } = this.state;
         if (activeUser.active) {
@@ -112,7 +116,8 @@ class UsersTable extends React.Component {
 
     onSubmit(event) {
         event.preventDefault();
-
+		
+		localStorage.removeItem(ACCESS_TOKEN_KEY);
         const { email, password } = this.state;
 
         axios({
@@ -168,7 +173,7 @@ class UsersTable extends React.Component {
 
     render() {
         const { accept, email, password } = this.state;
-        this.loadData();
+        
         if (accept) {
             return (
                 <div>
